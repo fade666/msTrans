@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: rabbit-server
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 1.117.215.215:8848  #  注册中心地址
+      config:
+        namespace: 4ba7571a-dbb9-403f-b901-d9c121f74d93 #  命名空间
+        server-addr: 1.117.215.215:8848
+        file-extension: yml
+        extension-configs:   # 引入多配置文件，一个配置文件对应一个data-id，data-id必须带一个group
+          - data-id: rabbit-server-rabbit-server.yml
+            group: DEFAULT_GROUP
+          - data-id: rabbit-server-rabbitmq.yml
+            group: DEFAULT_GROUP
+          - data-id: rabbit-server-redis.yml
+            group: DEFAULT_GROUP
