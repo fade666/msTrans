@@ -1,4 +1,4 @@
-package com.mawei.entity.pojo;
+package com.mawei.domain;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,7 @@
 package com.mawei.listener;
 
 import com.alibaba.fastjson.JSON;
+import com.mawei.service.DictFeignClient;
 import com.rabbitmq.client.Channel;
 import com.mawei.config.constant.RabbitMqConstant;
 import com.mawei.entity.pojo.MessageRecord;
@@ -29,6 +30,9 @@ public class MessageRecordListener {
     @Value("${spring.redis.password}")
     private String redisPassword;
 
+    @Autowired
+    private DictFeignClient dictFeignClient;
+
     /**
      * 下游服务消费一直失败这个暂时就不弄了，也挺简单的
      * 消费的时候维护一个计数，达到五次则入库，触发报警后人工干预
@@ -51,8 +55,9 @@ public class MessageRecordListener {
              * 防止重复消费
              */
             if (ops.setIfAbsent(messageRecord.getMessageId(), messageRecord.getMessageId())) {
-                log.info("下单成功，执行仓储服务");
-                log.info("下单成功，执行积分服务");
+
+                log.info("发送对象"+messageRecord.toString());
+                dictFeignClient.dealMsg(messageRecord);
                 // 手动ack
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             }
@@ -66,7 +71,7 @@ public class MessageRecordListener {
              * requeue：被拒绝的是否重新入队列 <br>
              */
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-            log.info(redisPassword+e.getMessage());
+            log.info("发生异常"+redisPassword+e.getMessage());
             /**
              * 拒绝一条消息：<br>
              * channel.basicReject(long deliveryTag, boolean requeue);<br>
