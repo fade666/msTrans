@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rabbit-consumer" />
+        <module name="redisLock" />
         <module name="rabbit-notifymsg-demo-bank1" />
       </profile>
     </annotationProcessing>
