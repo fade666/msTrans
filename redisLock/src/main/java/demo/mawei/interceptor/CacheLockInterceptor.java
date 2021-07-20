@@ -21,6 +21,7 @@ public class CacheLockInterceptor implements InvocationHandler {
     }
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        //获取方法的注解
         CacheLock cacheLock = method.getAnnotation(CacheLock.class);
         //没有cacheLock注解，pass
         if(null == cacheLock){

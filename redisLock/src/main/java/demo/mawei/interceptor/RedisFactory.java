@@ -28,7 +28,12 @@ public class RedisFactory {
     }
 
     public static RedisClient getDefaultClient(){
-        JedisPool pool = new JedisPool("1.117.215.215");
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+
+        poolConfig.setMaxTotal(10000);// 最大连接数，连接全部用完，进行等待
+        poolConfig.setMinIdle(10); // 最小空余数
+        poolConfig.setMaxIdle(1000); // 最大空余数
+        JedisPool pool = new JedisPool(poolConfig,"1.117.215.215",6379,60000,"root");
         RedisClient client = new RedisClient(pool);
         return client;
     }

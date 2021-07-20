@@ -16,13 +16,13 @@ public class SecKillTest {
     private static Long commidityId2 = 10000002L;
     private
     RedisClient client;
-    public static String HOST = "127.0.0.1";
+    public static String HOST = "1.117.215.215";
     private JedisPool jedisPool;
     @Before
     public synchronized void  beforeTest() throws IOException{
 
 
-        jedisPool = new JedisPool("127.0.0.1");
+        jedisPool = new JedisPool("1.117.215.215");
 
     }
 
@@ -46,6 +46,8 @@ public class SecKillTest {
                         SeckillInterface proxy = (SeckillInterface) Proxy.newProxyInstance(SeckillInterface.class.getClassLoader(),
                                 new Class[]{SeckillInterface.class}, new CacheLockInterceptor(testClass));
                         proxy.secKill("test", commidityId1);
+                        /*SecKillImpl secKill = new SecKillImpl();
+                        secKill.secKill("test",commidityId1);*/
                         endCount.countDown();
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
@@ -57,6 +59,7 @@ public class SecKillTest {
 
         }
 
+        //再启500个线程
         for(int i= splitPoint;i < threadCount;i++){
             threads[i] = new Thread(new  Runnable() {
                 public void run() {
@@ -69,6 +72,8 @@ public class SecKillTest {
                                 new Class[]{SeckillInterface.class}, new CacheLockInterceptor(testClass));
                         proxy.secKill("test", commidityId2);
                         //testClass.testFunc("test", 10000001L);
+                        /*SecKillImpl secKill = new SecKillImpl();
+                        secKill.secKill("test",commidityId2);*/
                         endCount.countDown();
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
@@ -82,7 +87,7 @@ public class SecKillTest {
 
 
         long startTime = System.currentTimeMillis();
-        //主线程释放开始信号量，并等待结束信号量
+        //主线程释放开始信号量，并等待结束信号量，这样做保证1000个线程做到完全同时执行，保证测试的正确性
         beginCount.countDown();
 
         try {

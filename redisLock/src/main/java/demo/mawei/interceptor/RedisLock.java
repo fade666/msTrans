@@ -1,7 +1,9 @@
 package demo.mawei.interceptor;
 
-import java.util.Random;
+import com.sun.media.jfxmedia.logging.Logger;
+import redis.clients.jedis.Jedis;
 
+import java.util.Random;
 
 
 public class RedisLock {
@@ -24,7 +26,6 @@ public class RedisLock {
      *
      * @param purpose 锁前缀
      * @param key 锁定的ID等东西
-     * @param client
      */
     public RedisLock(String purpose, String key){
         this.key = purpose + "_" + key + "_lock";
@@ -54,6 +55,8 @@ public class RedisLock {
         long nanoTime = System.nanoTime();
         timeout *= MILLI_NANO_TIME;
         try {
+
+
             //在timeout的时间范围内不断轮询锁
             while (System.nanoTime() - nanoTime < timeout) {
                 //锁不存在的话，设置锁并设置锁过期时间，即加锁
@@ -77,6 +80,7 @@ public class RedisLock {
         try {
             if(this.lock){
                 redisClient.delKey(key);//直接删除
+                System.out.println("删除"+key);
             }
         } catch (Throwable e) {
 
