@@ -75,4 +75,23 @@ public class OrderController {
         return "sleep 方法被 控制器中指定的方法sleepFallbackMethod 降级，参数是：" + id;
     }
 
+    // 可以造成熔断的方法
+    @GetMapping("/sleep5/{id}")
+    @HystrixCommand(defaultFallback = "sleepBreaker", commandProperties = {
+            @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),  // 开启熔断器
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),  // 当请求达到这个数量之后，才进行错误占比的计算。
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),  // 半打开休眠时间，熔断之后过了这段休眠时间，就会半打开，尝试接口是否恢复，如果恢复就完全打开熔断器。
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60")  // 错误占比，当错误次数超过这个百分比，就会熔断。
+    }) // commandProperties 的整个意思就是10秒中10次请求中有60%的请求出问题就熔断
+    public String sleep5(@PathVariable("id") int id) throws Exception {
+        if (id < 0) {
+            throw new Exception("id 是负数，抛出异常！！");
+        }
+        return "访问正常 id:";
+    }
+
+    // 熔断时调用的方法
+    public String sleepBreaker() {
+        return "接口有问题，目前被熔断了...";
+    }
 }

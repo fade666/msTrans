@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>rabbit-notifymsg-demo-bank1</module>
-        <module>rabbit-consumer</module>
+        <module>rabbit-product</module>
         <module>redisLock</module>
     </modules>
 
