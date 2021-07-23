@@ -13,6 +13,7 @@
         <module>rabbit-product</module>
         <module>redisLock</module>
         <module>hystrixdashboard</module>
+        <module>gateway</module>
     </modules>
 
     <properties>

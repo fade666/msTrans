@@ -7,6 +7,8 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.UUID;
+
 public class RabbitMqTest {
 
     @Autowired
@@ -14,10 +16,20 @@ public class RabbitMqTest {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
     @Test
     public void sendMsg(){
         //rabbitmqService.sendMessage("TestDirectExchange","TestDirectRouting","测试",new CorrelationData("1"));
         rabbitTemplate.convertAndSend("TestDirectExchange","TestDirectRouting","测试",new CorrelationData("1"));
+    }
+
+    @Test
+    public void uuidTest(){
+        for(int i =0;i<10 ;i++){
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            System.out.println(uuid);
+        }
+
     }
 
 }

@@ -9,6 +9,7 @@
         <module name="redisLock" />
         <module name="rabbit-notifymsg-demo-bank1" />
         <module name="hystrixdashboard" />
+        <module name="gateway" />
         <module name="rabbit-product" />
       </profile>
     </annotationProcessing>
