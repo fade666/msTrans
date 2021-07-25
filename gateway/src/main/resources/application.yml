@@ -15,3 +15,12 @@ spring:
         locator:
           enabled: true #开启自动路由,以服务id建立路由，服务id默认大写
           lower-case-service-id: true #服务id设置为小写
+      routes:
+      - id: rabbit-server
+        uri: lb://rabbit-server
+        predicates:
+        - Path=/hystrix/** # 路径匹配
+      - id: rabbit-product
+        uri: lb://rabbit-product
+        predicates:
+        - Path=/hystrix1/** # 路径匹配
