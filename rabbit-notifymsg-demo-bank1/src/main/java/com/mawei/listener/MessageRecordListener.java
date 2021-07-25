@@ -46,7 +46,6 @@ public class MessageRecordListener {
     @RabbitHandler
     public void process(String msg, Channel channel, Message message) throws IOException {
         try {
-            log.info(msg);
             log.info("我被消费了！！！！！！！"+redisPassword);
             // 序列化消息
             MessageRecord messageRecord = JSON.parseObject(msg, MessageRecord.class);

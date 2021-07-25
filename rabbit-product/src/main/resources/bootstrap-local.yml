@@ -1,6 +1,6 @@
 spring:
   application:
-    name: rabbit-consumer
+    name: rabbit-product
   main:
     allow-bean-definition-overriding: true
   cloud:

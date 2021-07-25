@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient(value = "rabbit-consumer")
+@FeignClient(value = "rabbit-product")
 @Component
 public interface DictFeignClient {
 
     @PostMapping ("/demo/dealMsg")
     public void dealMsg(@RequestBody  MessageRecord msg);
 
+    @GetMapping("/sleep")
+    public String sleep();
 }
