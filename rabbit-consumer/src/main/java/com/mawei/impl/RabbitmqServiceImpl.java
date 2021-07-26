@@ -1,4 +1,4 @@
-package com.mawei.service.impl;
+package com.mawei.impl;
 
 import com.mawei.callback.RabbitMqCallBack;
 import com.mawei.callback.RabbitMqConfirmCallback;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Logger;
 
 /**
  * @author xiejianwei

@@ -1,0 +1,23 @@
+server:
+  port: 8009
+spring:
+  profiles:
+    active: dev
+  application:
+    name: oauth2-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 1.117.215.215:8848  #  注册中心地址
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  redis:
+    database: 0
+    port: 6379
+    host: 1.117.215.215
+    password: root
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

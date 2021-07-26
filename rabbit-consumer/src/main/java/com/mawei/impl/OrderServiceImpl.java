@@ -1,4 +1,4 @@
-package com.mawei.service.impl;
+package com.mawei.impl;
 
 import com.mawei.entity.pojo.MessageRecord;
 import com.mawei.entity.pojo.Order;

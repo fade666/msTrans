@@ -1,4 +1,4 @@
-package com.mawei.service.impl;
+package com.mawei.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.mawei.config.constant.RabbitMqConstant;
