@@ -19,11 +19,11 @@
     </properties>
 
     <dependencies>
-        <!--springboot起步依赖-->
+        <!--&lt;!&ndash;springboot起步依赖&ndash;&gt;
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!--阿里巴巴 nacos 服务发现-->
         <dependency>
@@ -39,6 +39,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
     </dependencies>
 
