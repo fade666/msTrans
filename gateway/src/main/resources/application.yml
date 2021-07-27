@@ -24,3 +24,8 @@ spring:
         uri: lb://rabbit-product
         predicates:
         - Path=/hystrix1/** # 路径匹配
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            jwk-set-uri: 'http://localhost:9401/rsa/publicKey' #配置RSA的公钥访问地址
