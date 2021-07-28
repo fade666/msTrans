@@ -39,8 +39,16 @@ public class UserServiceImpl implements UserDetailsService {
         userList.add(new UserDTO(2L,"andy", password,1, CollUtil.toList("TEST")));
     }
 
+    /**
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     * spring security登录接口
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        //就是模拟数据库查询出来的用户数据,这里在本地bean初始化方法的时候向list中添加了两个用户
         List<UserDTO> findUserList = userList.stream().filter(item -> item.getUsername().equals(username)).collect(Collectors.toList());
         if (CollUtil.isEmpty(findUserList)) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);

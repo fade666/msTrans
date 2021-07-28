@@ -1,10 +1,10 @@
 server:
   port: 8009
 spring:
-  profiles:
-    active: dev
   application:
     name: oauth2-auth
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     nacos:
       discovery:
@@ -21,3 +21,8 @@ management:
     web:
       exposure:
         include: "*"
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/actuator/**"
+      - "/auth/oauth/token"
