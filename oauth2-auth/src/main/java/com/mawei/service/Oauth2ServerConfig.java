@@ -74,8 +74,8 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Bean
     public KeyPair keyPair() {
         //从classpath下的证书中获取秘钥对
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
-        return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "root123".toCharArray());
+        return keyStoreKeyFactory.getKeyPair("jwt", "root123".toCharArray());
     }
 
 }

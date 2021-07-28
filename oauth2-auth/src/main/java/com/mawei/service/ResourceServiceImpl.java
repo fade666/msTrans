@@ -20,7 +20,7 @@ public class ResourceServiceImpl {
 
     private Map<String, List<String>> resourceRolesMap;
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @PostConstruct
     public void initData() {
