@@ -9,6 +9,11 @@ spring:
     nacos:
       discovery:
         server-addr: 1.117.215.215:8848  #  注册中心地址
+  redis:
+    database: 0
+    port: 6379
+    host: 1.117.215.215
+    password: root
     gateway:
       enabled: true  #开启网关
       discovery:
@@ -24,18 +29,16 @@ spring:
         uri: lb://rabbit-product
         predicates:
         - Path=/hystrix1/** # 路径匹配
-      - id: oauth2-api-route
-          uri: lb://micro-oauth2-api
-          predicates:
-            - Path=/api/**
-          filters:
-            - StripPrefix=1
-      - id: oauth2-auth-route
-        uri: lb://micro-oauth2-auth
+      - id: oauth2-hello
+        uri: lb://rabbit-product
         predicates:
-          - Path=/auth/**
+        - Path=/api/**
+      - id: oauth2-auth
+        uri: lb://oauth2-auth
+        predicates:
+        - Path=/auth/**
         filters:
-          - StripPrefix=1
+        - StripPrefix=1
   security:
     oauth2:
       resourceserver:
