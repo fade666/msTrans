@@ -13,6 +13,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Transaction;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 public class RedisClient {
 
     public JedisPool jedisPool;
@@ -580,6 +582,31 @@ public class RedisClient {
             return true;
         } finally {
             jedisPool.returnResourceObject(client);// 向连接池“归还”资源
+        }
+    }
+
+    /**
+     * String类型的键值写入redis 原子性设置过期时间
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean set(String key, String value,String expire) {
+        Jedis client = jedisPool.getResource();
+        String issuccess = "";
+        try {
+
+            String result = client.set(key, value,"NX","EX",30);
+
+            issuccess = client.set(key, value);
+            if ("OK".equals(issuccess)) {
+                return true;
+            } else {
+                return false;
+            }
+        } finally {
+            jedisPool.returnResourceObject(client);;// 向连接池“归还”资源
         }
     }
 

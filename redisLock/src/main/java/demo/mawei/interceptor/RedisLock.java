@@ -59,6 +59,7 @@ public class RedisLock {
 
             //在timeout的时间范围内不断轮询锁
             while (System.nanoTime() - nanoTime < timeout) {
+                System.out.println("轮询获取锁");
                 //锁不存在的话，设置锁并设置锁过期时间，即加锁
                 if (this.redisClient.setnx(this.key, LOCKED) == 1) {
                     this.redisClient.expire(key, expire);//设置锁过期时间是为了在没有释放
