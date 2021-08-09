@@ -27,13 +27,16 @@ public class RedislockServiceImpl implements RedislockService {
     public String get(String key) throws InterruptedException {
         String result = jedis.get(key);
         log.info("获取redis中的内容");
-        if(StringUtils.EMPTY.equals(result)){
+        if(result == null){
             RedisLock lock = new RedisLock("TEST_PREFIX", key);
             try {
                 if(lock.lock(1,5000)){
                     //模拟数据库查询
                     result = "DbResult";
+                    jedis.set(key,result);
                 }else{
+                    //资源被锁
+                    System.out.println("被锁，睡眠0.1s再次获取锁");
                     //睡眠100ms
                     Thread.sleep(100);
                     result = get(key);
