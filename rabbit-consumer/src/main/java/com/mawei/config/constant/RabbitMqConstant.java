@@ -17,4 +17,19 @@ public class RabbitMqConstant {
      */
     public static final String ORDER_QUEUE = "order_queue";
 
+    /**
+     * 死信交换机
+     */
+    public static final String DEAD_LETTER_EXCHANGE= "dead_letter_exchange";
+
+    /**
+     * 死信队列
+     */
+    public static final String DEAD_LETTER_QUEUE= "dead_letter_queue";
+
+    /**
+     * 死信路由键
+     */
+    public static final String DEAD_LETTER_ROUTING_KEY= "dead_letter_key";
+
 }

@@ -53,13 +53,22 @@ public class MessageRecordListener {
             /**
              * 防止重复消费
              */
+
+
             if (ops.setIfAbsent(messageRecord.getMessageId(), messageRecord.getMessageId())) {
+
+                if(true){
+                    throw new Exception("死信队列测试");
+                }
 
                 log.info("发送对象"+messageRecord.toString());
                 dictFeignClient.dealMsg(messageRecord);
                 // 手动ack
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             }
+
+
+
         } catch (Exception e) {
             //消费者处理出了问题，需要告诉队列信息消费失败
             /**
