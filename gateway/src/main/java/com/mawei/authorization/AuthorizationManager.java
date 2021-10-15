@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,12 +48,24 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         //搞骚操作了 不向管这个序列化的问题，这里直接将list中的【和】符号去掉
         authorities = authorities.stream().map(e->e= e.replace("[","")).collect(Collectors.toList());
         authorities = authorities.stream().map(e->e= e.replace("]","")).collect(Collectors.toList());
+        authorities = authorities.stream().map(e->e= e.replace(" ","")).collect(Collectors.toList());
 
         System.out.println("从redis中读取数据");
         System.out.println(authorities.toString());
-        authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
 
-        System.out.println(authorities);
+        List<String> authList = new ArrayList<>();
+
+        for (String str:authorities) {
+            if(str.contains(",")){
+                List<String> strings = Arrays.asList(str.split(","));
+                authList.addAll(strings);
+            }else{
+                authList.add(str);
+            }
+        }
+        authList = authList.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+
+        System.out.println(authList);
 
 
         //认证通过且角色匹配的用户可访问当前路径
@@ -59,7 +73,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 .filter(Authentication::isAuthenticated)
                 .flatMapIterable(Authentication::getAuthorities)
                 .map(GrantedAuthority::getAuthority)
-                .any(authorities::contains)
+                .any(authList::contains)
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
     }
